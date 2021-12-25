@@ -1,0 +1,116 @@
+pragma solidity 0.8.4;
+
+interface IERC {
+  
+    function totalSupply() external view returns (uint256);
+    
+    function balanceOf(address account) external view returns (uint256);
+    
+    function transfer(address recipient, uint256 amount) external returns (bool);
+
+    function allowance(address owner, address spender) external view returns (uint256);
+    
+    function approve(address spender, uint256 amount) external returns (bool);
+    
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+    
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+
+}
+    
+interface IBEP20 is IERC20{
+
+    function decimals() external view returns (uint8);
+
+    function symbol() external view returns (string memory);
+
+    function getOwner() external view returns (address);
+}
+
+library SafeMath {
+
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        uint256 c = a + b;
+        require(c >=a, "SafeMath: addition overflow");
+        
+        return c;
+        }
+    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        require(b <= a, errorMessage);
+        uint256 c = a - b;
+
+        return c;
+        
+        function sub(uint256 a, uint256 b) internal pure return (uint256) {
+            if (a == 0) {
+                return 0;
+            }
+        
+            uint256 c = a * b;
+            require(c / a == b, "SafeMath: multiplication overflow");
+
+            return c;
+        }
+        function div(uint256 a, uint256 b) internal pure return (uint256) {
+            require(b > 0, errorMessage);
+            uint256 c = a / b;
+
+            return c;
+        }
+
+        function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+            require(b !=0, errorMessage);
+            return a % b;
+        }
+    }
+
+    abstract contract Context {
+        function _msgSender() internal virtual returns (address payable) {
+            return payable(msg.sender);
+    }
+    function _msg() internal view virtual returns (bytes memory) {
+        this; 
+        return msg.data;
+    }
+}
+
+abstract contract Ownable is Context {
+    address private _owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    constructor() {
+        _transferOwnership(_msgSender());
+    }
+    function _transferOwnership(address newOwner) internal virtual {
+        address oldOwner = _owner;
+        _owner = newOwner;
+        emit OwnershipTransffered(oldOwner, newOwner);
+    }
+}
+
+interface IUniswaoV2Factory {
+    event PairCreated(address indexed token0, address indexed token1, address pair, uint);
+
+    function feeTo() external view return (address);
+    function feeToSetter() external view returns (address);
+
+    function setFeeTo(address) external;
+    function setFeeToSetter(address) external;
+}
+
+interface IUniswapV2Pair {
+    event Approval(address indexed owner, address indexed spender, uint value);
+    event Transfer(address indexed from, address indexed to, uint value)
+
+    function name() external pure returns (string memory);
+    function symbol() external pure return (string memory);
+    function decimal() external pure return (uint8);
+    function totalSupply() external view return (uint);
+    function BalanceOf(address owner) external view return(uint);
+    function allowance(address owner, address spender) external view return(uint);
+}
+
+    
